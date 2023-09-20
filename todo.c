@@ -42,13 +42,6 @@ void get_display_menu(int *display_choice)
     *display_choice = choice;
 }
 
-void swap(Task *struct1, Task *struct2)
-{
-    Task temp = *struct1;
-    *struct1 = *struct2;
-    *struct1 = temp;
-}
-
 int main ()
 {
     int user_choice;
@@ -81,7 +74,7 @@ int main ()
             scanf("%d", &month);
             printf("Year:\n");
             scanf("%d", &year);
-            tasks[index].id = index;
+            tasks[index].id = index + 1;
             tasks[index].title = strdup(title);
             tasks[index].description = strdup(description);
             tasks[index].status = status;
@@ -120,7 +113,7 @@ int main ()
                 //display tasks
                 for (unsigned int i = 0; i < index; i++)
                 {
-                    printf("\n****** Task %d ******:\n", (i + 1));
+                    printf("\n****** Task %d ******:\n", tasks[i].id);
                     printf("Title: %s\n", tasks[i].title);
                     printf("Description: %s\n", tasks[i].description);
                     printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
@@ -148,7 +141,25 @@ int main ()
                     printf("No tasks have been added\n");
                 }
                 else
-                {    
+                {
+                for (unsigned int i = 0; i < index; i++)
+                {
+                    for (unsigned int j = 0; j < index - i - 1; j++)
+                    {
+                        // Compare deadlines
+                        if (tasks[j].deadline[2] > tasks[j + 1].deadline[2] ||
+                            (tasks[j].deadline[2] == tasks[j + 1].deadline[2] &&
+                            tasks[j].deadline[1] > tasks[j + 1].deadline[1]) ||
+                            (tasks[j].deadline[2] == tasks[j + 1].deadline[2] &&
+                            tasks[j].deadline[1] == tasks[j + 1].deadline[1] &&
+                         tasks[j].deadline[0] > tasks[j + 1].deadline[0]))
+                    {
+                        Task temp = tasks[j];
+                        tasks[j] = tasks[j + 1];
+                        tasks[j + 1] = temp;
+                    }
+                }
+            }
                 for (unsigned int i = 0; i < index; i++)
                 {
                     printf("\n****** Task %d ******:\n", (i + 1));
@@ -174,6 +185,7 @@ int main ()
                 }
                 break;
                 case 3:
+
                 break;
                 default:
                 printf("Invalid choice\n");
