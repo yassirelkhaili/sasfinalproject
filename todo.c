@@ -4,6 +4,7 @@
 #include <string.h>
 
 typedef struct {
+    int id;
     char *title;
     char *description;
     int  deadline[3];
@@ -73,6 +74,7 @@ int main ()
             scanf("%d", &month);
             printf("Year:\n");
             scanf("%d", &year);
+            tasks[index].id = index;
             tasks[index].title = title;
             tasks[index].description = description;
             tasks[index].status = status;
