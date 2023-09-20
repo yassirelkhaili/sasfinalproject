@@ -19,7 +19,7 @@ void get_user_choice(int *user_choice)
     printf("[1] Add task\n");
     printf("[2] Display tasks\n");
     printf("[3] Modify task\n");
-    printf("[4] Delete data\n");
+    printf("[4] Delete task\n");
     printf("[5] Search task\n");
     printf("[6] Display statistics\n");
     printf("[7] Quit\n");
@@ -45,13 +45,44 @@ int main ()
 {
     int user_choice;
     int sub_choice;
+    Task tasks[100];
     get_user_choice(&user_choice);
     do {
+        char title[50];
+        char description[50];
+        char status[20];
+        int day = 0;
+        int month = 0;
+        int year = 0;
+        int index = 0;
         switch (user_choice)
         {
             case 1:
-
+            printf("Enter the title:\n");
+            scanf("%s", title);
+            printf("Enter the description:\n");
+            getchar();
+            scanf("%s", description);
+            printf("Enter the deadline:\n");
+            printf("Day:");
+            scanf("%d", &day);
+            printf("Month:");
+            scanf("%d", &month);
+            printf("Year:");
+            scanf("%d", &year);
+            strcpy(status, "Todo");
+            tasks[index].title = title;
+            tasks[index].description = description;
+            tasks[index].status = status;
+            tasks[index].deadline[0] = day;
+            tasks[index].deadline[1] = month;
+            tasks[index].deadline[2] = year;
+            index++;
+            printf("Task has been added successfully.");
             get_user_choice(&user_choice);
+            break;
+            case 2:
+            
             break;
             default:
             printf("Invalid choice\n");

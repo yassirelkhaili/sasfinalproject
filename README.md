@@ -1,42 +1,43 @@
-###Tasks
+# Tasks
 
-#Description:
+## Description
+
 Todo list program.
 
-#user must return to main menu after each task.
+**User must return to the main menu after each task.**
 
-##Main functionality:
+## Main Functionality
 
-#ADD a task:
-task:
-*title,
-*description,
-*deadline,
-*status (Todo, In progress, finished);
+- **ADD a task:**
+  - *Title
+  - *Description
+  - *Deadline
+  - *Status (Todo, In progress, finished)
 
-#Display a list of all tasks:
-3 ways (submenu):
-*By alphabetical order,
-*By deadline,
-*deadline first that are urgent (less than 3 days left),
+- **Display a list of all tasks:**
+  - Three ways (submenu):
+    1. By alphabetical order
+    2. By deadline
+    3. Deadline first that are urgent (less than 3 days left)
 
-#Modify a task:
-*modify the description,
-*modify the status,
-*modify the deadline,
+- **Modify a task:**
+  - Modify the description
+  - Modify the status
+  - Modify the deadline
 
-#Delete a task:
-by id,
+- **Delete a task:**
+  - By id
 
-#Search for a task:
-by id,
-by title,
+- **Search for a task:**
+  - By id
+  - By title
 
-#Display statistics:
-3 ways (submenu):
-*total number of tasks,
-*number of complete and incomplete tasks,
-*days left until deadline of each task,
+- **Display statistics:**
+  - Three ways (submenu):
+    1. Total number of tasks
+    2. Number of complete and incomplete tasks
+    3. Days left until the deadline of each task
+
 
 
 
