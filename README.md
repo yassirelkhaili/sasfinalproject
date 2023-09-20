@@ -6,7 +6,7 @@ Todo list program.
 
 **User must return to the main menu after each task.**
 
-## Main Functionality
+## Main Functionalities
 
 - **ADD a task:**
   - *Title

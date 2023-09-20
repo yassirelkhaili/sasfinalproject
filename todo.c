@@ -57,6 +57,7 @@ int main ()
         int day = 0;
         int month = 0;
         int year = 0;
+        char *ptr;
         switch (user_choice)
         {
             case 1:
@@ -75,8 +76,8 @@ int main ()
             printf("Year:\n");
             scanf("%d", &year);
             tasks[index].id = index;
-            tasks[index].title = title;
-            tasks[index].description = description;
+            tasks[index].title = strdup(title);
+            tasks[index].description = strdup(description);
             tasks[index].status = status;
             tasks[index].deadline[0] = day;
             tasks[index].deadline[1] = month;
@@ -97,7 +98,21 @@ int main ()
                 }
                 else
                 {
+                //sort tasks alphabetically using bubblesort
                 for (size_t i = 0; i < index; i++)
+                {
+                    for (size_t j = 0; j < index - i - 1; j++)
+                    {
+                        if (strcmp(tasks[j].title, tasks[j + 1].title))
+                        {
+                            Task temp = tasks[j];
+                            tasks[j] = tasks[j + 1];
+                            tasks[j + 1] = tasks[j];
+                        }
+                    }
+                }
+                //display tasks
+                for (unsigned int i = 0; i < index; i++)
                 {
                     printf("\n****** Task %d ******:\n", (i + 1));
                     printf("Title: %s\n", tasks[i].title);
@@ -121,6 +136,40 @@ int main ()
                 }
                 }
                 break;
+                case 2:
+                 if(index == 0)
+                {
+                    printf("No tasks have been added\n");
+                }
+                else
+                {
+                    
+                for (unsigned int i = 0; i < index; i++)
+                {
+                    printf("\n****** Task %d ******:\n", (i + 1));
+                    printf("Title: %s\n", tasks[i].title);
+                    printf("Description: %s\n", tasks[i].description);
+                    printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
+                    switch (tasks[i].status)
+                    {
+                        case 1:
+                        printf("Status: Todo\n");
+                        break;
+                        case 2:
+                        printf("Status: Doing\n");
+                        break;
+                        case 3:
+                        printf("Status: Done\n");
+                        break;
+                        default:
+                        printf("Status: Unknown\n");
+                        break;
+                    }
+                }
+                }
+                break;
+                case 3:
+                break;
                 default:
                 printf("Invalid choice\n");
                 break;
@@ -135,3 +184,33 @@ int main ()
     printf("----End of Program----");
     return 0;
 }
+
+// if(index == 0)
+//                 {
+//                     printf("No tasks have been added\n");
+//                 }
+//                 else
+//                 {
+//                 for (size_t i = 0; i < index; i++)
+//                 {
+//                     printf("\n****** Task %d ******:\n", (i + 1));
+//                     printf("Title: %s\n", tasks[i].title);
+//                     printf("Description: %s\n", tasks[i].description);
+//                     printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
+//                     switch (tasks[i].status)
+//                     {
+//                         case 1:
+//                         printf("Status: Todo\n");
+//                         break;
+//                         case 2:
+//                         printf("Status: Doing\n");
+//                         break;
+//                         case 3:
+//                         printf("Status: Done\n");
+//                         break;
+//                         default:
+//                         printf("Status: Unknown\n");
+//                         break;
+//                     }
+//                 }
+// }
