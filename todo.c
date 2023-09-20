@@ -42,6 +42,12 @@ void get_display_menu(int *display_choice)
     *display_choice = choice;
 }
 
+void swap(Task *struct1, Task *struct2)
+{
+    Task temp = *struct1;
+    *struct1 = *struct2;
+    *struct1 = temp;
+}
 
 int main ()
 {
@@ -99,15 +105,15 @@ int main ()
                 else
                 {
                 //sort tasks alphabetically using bubblesort
-                for (size_t i = 0; i < index; i++)
+                for (unsigned int i = 0; i < index; i++)
                 {
-                    for (size_t j = 0; j < index - i - 1; j++)
+                    for (unsigned int j = 0; j < index - i - 1; j++)
                     {
-                        if (strcmp(tasks[j].title, tasks[j + 1].title))
+                        if (strcmp(tasks[j].title, tasks[j + 1].title) > 0)
                         {
                             Task temp = tasks[j];
                             tasks[j] = tasks[j + 1];
-                            tasks[j + 1] = tasks[j];
+                            tasks[j + 1] = temp;
                         }
                     }
                 }
@@ -142,8 +148,7 @@ int main ()
                     printf("No tasks have been added\n");
                 }
                 else
-                {
-                    
+                {    
                 for (unsigned int i = 0; i < index; i++)
                 {
                     printf("\n****** Task %d ******:\n", (i + 1));
@@ -184,33 +189,3 @@ int main ()
     printf("----End of Program----");
     return 0;
 }
-
-// if(index == 0)
-//                 {
-//                     printf("No tasks have been added\n");
-//                 }
-//                 else
-//                 {
-//                 for (size_t i = 0; i < index; i++)
-//                 {
-//                     printf("\n****** Task %d ******:\n", (i + 1));
-//                     printf("Title: %s\n", tasks[i].title);
-//                     printf("Description: %s\n", tasks[i].description);
-//                     printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
-//                     switch (tasks[i].status)
-//                     {
-//                         case 1:
-//                         printf("Status: Todo\n");
-//                         break;
-//                         case 2:
-//                         printf("Status: Doing\n");
-//                         break;
-//                         case 3:
-//                         printf("Status: Done\n");
-//                         break;
-//                         default:
-//                         printf("Status: Unknown\n");
-//                         break;
-//                     }
-//                 }
-// }
