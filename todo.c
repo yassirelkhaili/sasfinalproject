@@ -355,6 +355,28 @@ case 3:
     }
     get_user_choice(&user_choice);
     break;
+    case 4:
+    printf("Enter the task number:\n");
+    scanf("%d", &id);
+    int i = 0;
+    int found = 0;
+
+    while (i < index)
+    {
+        if (tasks[i].id == id)
+        {
+            found = 1;
+            
+            break; 
+        }
+        i++;
+    }
+    if (!found)
+    {
+        printf("Task not found\n");
+    }
+    get_user_choice(&user_choice);
+    break;
             case 7:
             break;
             default:
