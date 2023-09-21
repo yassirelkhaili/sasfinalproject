@@ -95,6 +95,7 @@ int main ()
     int modify_choice;
     int index = 0;
     Task tasks[100];
+    // printf("\033[0;34m"); sets text color to blue (optional)
     get_user_choice(&user_choice);
     do {
         char title[50];
@@ -184,7 +185,7 @@ int main ()
                 }
                 }
                 break;
-                case 2:
+                //case 2:
             //      if(index == 0)
             //     {
             //         printf("No tasks have been added\n");
@@ -232,7 +233,7 @@ int main ()
             //         }
             //     }
             //     }
-                break;
+                //break;
                 case 3:
                 if(index == 0)
                 {
@@ -282,73 +283,77 @@ int main ()
             }
             get_user_choice(&user_choice);
             break;
-            case 3:
-                printf("Enter the task number/id:\n");
-                scanf("%d", &id);
-                for (unsigned int i = 1; i <= index; i++)
-                {
-                   if (tasks[i].id == id)
-                   {
-                    printf("\n****** Task %d ******:\n", tasks[i].id);
-                    printf("Title: %s\n", tasks[i].title);
-                    printf("Description: %s\n", tasks[i].description);
-                    printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
-                    switch (tasks[i].status)
-                    {
-                        case 1:
-                        printf("Status: Todo\n");
-                        break;
-                        case 2:
-                        printf("Status: Doing\n");
-                        break;
-                        case 3:
-                        printf("Status: Done\n");
-                        break;
-                        default:
-                        printf("Status: Unknown\n");
-                        break;
-                    }
-                    get_modify_menu(&modify_choice);
-                    switch (modify_choice)
-                    {
-                        case 1:
-                        printf("Enter a Description\n");
-                        fgets(description, sizeof(description), stdin);
-                        description[ft_strlen(description) - 1] = '\0';
-                        tasks[i].description = strdup(description);
-                        break;
-                        case 2:
-                        printf("Day:\n");
-                        scanf("%d", &day);
-                        printf("Month:\n");
-                        scanf("%d", &month);
-                        printf("Year:\n");
-                        scanf("%d", &year);
-                        tasks[i].deadline[0] = day;
-                        tasks[i].deadline[1] = month;
-                        tasks[i].deadline[2] = year;
-                        break;
-                        case 3:
-                        printf("Enter a Status:\n");
-                        printf("Enter 1 for Todo, 2 for Doing and 3 for Done\n");
-                        scanf("%d", &status);
-                        tasks[i].status = status;  
-                        break;
-                        case 4:
-                        break;
-                        default:
-                        printf("Invalid choice\n");
-                        break;
-                    }
-                   }
-                   else 
-                   {
-                    if (modify_choice != 4)
-                        printf("Task doesnt exist\n");
-                        break;
-                   }
-                }
-            break;
+case 3:
+    printf("Enter the task number:\n");
+    scanf("%d", &id);
+    int i = 0;
+    int found = 0;
+
+    while (i < index)
+    {
+        if (tasks[i].id == id)
+        {
+            found = 1;
+            printf("\n****** Task %d ******:\n", tasks[i].id);
+            printf("Title: %s\n", tasks[i].title);
+            printf("Description: %s\n", tasks[i].description);
+            printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
+            switch (tasks[i].status)
+            {
+                case 1:
+                    printf("Status: Todo\n");
+                    break;
+                case 2:
+                    printf("Status: Doing\n");
+                    break;
+                case 3:
+                    printf("Status: Done\n");
+                    break;
+                default:
+                    printf("Status: Unknown\n");
+                    break;
+            }
+            get_modify_menu(&modify_choice);
+            switch (modify_choice)
+            {
+                case 1:
+                    printf("Enter the description:\n");
+                    getchar();
+                    fgets(description, sizeof(description), stdin);
+                    description[ft_strlen(description) - 1] = '\0';
+                    free(tasks[i].description); 
+                    tasks[i].description = strdup(description);
+                    break;
+                case 2:
+                    printf("Enter the deadline:\n");
+                    printf("Day:\n");
+                    scanf("%d", &day);
+                    printf("Month:\n");
+                    scanf("%d", &month);
+                    printf("Year:\n");
+                    scanf("%d", &year);
+                    tasks[i].deadline[0] = day;
+                    tasks[i].deadline[1] = month;
+                    tasks[i].deadline[2] = year;
+                    break;
+                case 3:
+                    printf("Enter the status (1 for Todo, 2 for Doing, 3 for Done):\n");
+                    scanf("%d", &status);
+                    tasks[i].status = status;
+                    break;
+                default:
+                    printf("Invalid Choice\n");
+                    break;
+            }
+            break; 
+        }
+        i++;
+    }
+    if (!found)
+    {
+        printf("Task not found\n");
+    }
+    break;
             case 7:
             break;
             default:
