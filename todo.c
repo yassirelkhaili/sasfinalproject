@@ -285,7 +285,7 @@ int main ()
             case 3:
                 printf("Enter the task number/id:\n");
                 scanf("%d", &id);
-                for (unsigned int i = 0; i < index; i++)
+                for (unsigned int i = 1; i <= index; i++)
                 {
                    if (tasks[i].id == id)
                    {
@@ -331,9 +331,10 @@ int main ()
                         case 3:
                         printf("Enter a Status:\n");
                         printf("Enter 1 for Todo, 2 for Doing and 3 for Done\n");
-                        fgets(description, sizeof(description), stdin);
-                        description[ft_strlen(description) - 1] = '\0';
-                        tasks[i].description = strdup(description);  
+                        scanf("%d", &status);
+                        tasks[i].status = status;  
+                        break;
+                        case 4:
                         break;
                         default:
                         printf("Invalid choice\n");
@@ -342,6 +343,7 @@ int main ()
                    }
                    else 
                    {
+                    if (modify_choice != 4)
                         printf("Task doesnt exist\n");
                         break;
                    }
