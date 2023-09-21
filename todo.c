@@ -237,8 +237,6 @@ int main ()
                         daysleft += (tasks[i].deadline[0] - timestruct->tm_mday);
                         if (daysleft >= 0 && daysleft <= 3)
                         {
-                            if (tasks[i].deadline[2] >= currentyear)
-                    {
                     printf("\n****** Task %d ******:\n", tasks[i].id);
                     printf("Title: %s\n", tasks[i].title);
                     printf("Description: %s\n", tasks[i].description);
