@@ -163,7 +163,7 @@ int main ()
                 //display tasks
                 for (unsigned int i = 0; i < index; i++)
                 {
-                    printf("\n****** Task %d ******:\n", tasks[i].id);
+                    printf("\n****** Task %d ******\n", tasks[i].id);
                     printf("Title: %s\n", tasks[i].title);
                     printf("Description: %s\n", tasks[i].description);
                     printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
@@ -253,7 +253,7 @@ int main ()
                         daysleft += (tasks[i].deadline[0] - timestruct->tm_mday);
                         if (daysleft >= 0 && daysleft <= 3)
                         {
-                    printf("\n****** Task %d ******:\n", tasks[i].id);
+                    printf("\n****** Task %d ******\n", tasks[i].id);
                     printf("Title: %s\n", tasks[i].title);
                     printf("Description: %s\n", tasks[i].description);
                     printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
@@ -294,7 +294,7 @@ case 3:
         if (tasks[i].id == id)
         {
             found = 1;
-            printf("\n****** Task %d ******:\n", tasks[i].id);
+            printf("\n****** Task %d ******\n", tasks[i].id);
             printf("Title: %s\n", tasks[i].title);
             printf("Description: %s\n", tasks[i].description);
             printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
@@ -353,6 +353,7 @@ case 3:
     {
         printf("Task not found\n");
     }
+    get_user_choice(&user_choice);
     break;
             case 7:
             break;
