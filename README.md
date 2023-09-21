@@ -18,7 +18,7 @@ Todo list program.
   - Three ways (submenu):
     1. By alphabetical order
     2. By deadline
-    3. Deadline first that are urgent (less than 3 days left)
+    3. Deadline first that are urgent (less than or equal to 3 days left)
 
 - **Modify a task:**
   - Modify the description

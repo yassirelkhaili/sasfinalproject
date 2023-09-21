@@ -89,6 +89,8 @@ int main ()
         int day = 0;
         int month = 0;
         int year = 0;
+        time_t currentdate = time(NULL); //get current time
+        struct tm *timestruct = localtime(&currentdate); //transform current time to struct
         switch (user_choice)
         {
             case 1:
@@ -223,9 +225,20 @@ int main ()
                 }
                 else
                 {
-                //display tasks with deadline less than 3 days (urgent)
+                //display tasks with deadline less than or equal to 3 days (urgent)
+                int daysleft = 0;
+                int currentyear = timestruct->tm_year + 1900; //add epoch time to get currentyear
                 for (unsigned int i = 0; i < index; i++)
                 {
+                    if (tasks[i].deadline[2] >= currentyear)
+                    {
+                        daysleft = (tasks[i].deadline[2] - currentyear) * 365;
+                        daysleft += (tasks[i].deadline[1] - timestruct->tm_mon - 1) * 30;
+                        daysleft += (tasks[i].deadline[0] - timestruct->tm_mday);
+                        if (daysleft >= 0 && daysleft <= 3)
+                        {
+                            if (tasks[i].deadline[2] >= currentyear)
+                    {
                     printf("\n****** Task %d ******:\n", tasks[i].id);
                     printf("Title: %s\n", tasks[i].title);
                     printf("Description: %s\n", tasks[i].description);
@@ -244,6 +257,8 @@ int main ()
                         default:
                         printf("Status: Unknown\n");
                         break;
+                    }
+                        }
                     }
                 }
                 }
