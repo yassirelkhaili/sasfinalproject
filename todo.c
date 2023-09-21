@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <time.h>
 
 typedef struct {
     int id;
@@ -10,6 +11,38 @@ typedef struct {
     int  deadline[3];
     int status;
 } Task;
+
+int ft_strcmp(char *s1, char *s2)
+{
+    char ch1 = 0; 
+    char ch2 = 0;
+    
+    while (*s1 && *s2 && *s1 == *s2)
+    {
+        s1++;
+        s2++;
+    }  
+    if ((*s1 >= 97 && *s1 <= 122) || (*s2 >= 97 && *s2 <= 122))
+    {
+        if (*s1 >= 97 && *s1 <= 122)
+            ch1 = *s1 - 32; 
+        if (*s2 >= 97 && *s2 <= 122)
+            ch2 = *s2 - 32;  
+    }
+    return (ch1 - ch2);
+}
+
+
+int ft_strlen(char *str)
+{
+    int strlen = 0;
+    while (*str)
+    {
+        strlen++;
+        str++;
+    }
+    return strlen;
+}
 
 void get_user_choice(int *user_choice)
 {
@@ -56,17 +89,16 @@ int main ()
         int day = 0;
         int month = 0;
         int year = 0;
-        char *ptr;
         switch (user_choice)
         {
             case 1:
             printf("Enter the title:\n");
             getchar();
             fgets(title, sizeof(title), stdin);
-            title[strlen(title) - 1] = '\0';
+            title[ft_strlen(title) - 1] = '\0';
             printf("Enter the description:\n");
             fgets(description, sizeof(description), stdin);
-            description[strlen(description) - 1] = '\0';
+            description[ft_strlen(description) - 1] = '\0';
             printf("Enter the deadline:\n");
             printf("Day:\n");
             scanf("%d", &day);
@@ -102,7 +134,7 @@ int main ()
                 {
                     for (unsigned int j = 0; j < index - i - 1; j++)
                     {
-                        if (strcmp(tasks[j].title, tasks[j + 1].title) > 0)
+                        if (ft_strcmp(tasks[j].title, tasks[j + 1].title) > 0)
                         {
                             Task temp = tasks[j];
                             tasks[j] = tasks[j + 1];
@@ -185,7 +217,36 @@ int main ()
                 }
                 break;
                 case 3:
-
+                if(index == 0)
+                {
+                    printf("No tasks have been added\n");
+                }
+                else
+                {
+                //display tasks with deadline less than 3 days (urgent)
+                for (unsigned int i = 0; i < index; i++)
+                {
+                    printf("\n****** Task %d ******:\n", tasks[i].id);
+                    printf("Title: %s\n", tasks[i].title);
+                    printf("Description: %s\n", tasks[i].description);
+                    printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
+                    switch (tasks[i].status)
+                    {
+                        case 1:
+                        printf("Status: Todo\n");
+                        break;
+                        case 2:
+                        printf("Status: Doing\n");
+                        break;
+                        case 3:
+                        printf("Status: Done\n");
+                        break;
+                        default:
+                        printf("Status: Unknown\n");
+                        break;
+                    }
+                }
+                }
                 break;
                 default:
                 printf("Invalid choice\n");
