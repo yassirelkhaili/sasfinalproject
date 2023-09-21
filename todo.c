@@ -75,10 +75,24 @@ void get_display_menu(int *display_choice)
     *display_choice = choice;
 }
 
+void get_modify_menu(int *modify_choice)
+{
+    int choice;
+    printf("\nChoose an item to modify:\n");
+    printf("[1] Description\n");
+    printf("[2] Deadline\n");
+    printf("[3] Status\n");
+    printf("[4] Back\n");
+    printf("\nEnter your choice [1-4]:\n");
+    scanf("%d", &choice);
+    *modify_choice = choice;
+}
+
 int main ()
 {
     int user_choice;
     int display_choice;
+    int modify_choice;
     int index = 0;
     Task tasks[100];
     get_user_choice(&user_choice);
@@ -89,6 +103,7 @@ int main ()
         int day = 0;
         int month = 0;
         int year = 0;
+        int id = 0;
         time_t currentdate = time(NULL); //get current time
         struct tm *timestruct = localtime(&currentdate); //transform current time to struct
         switch (user_choice)
@@ -170,53 +185,53 @@ int main ()
                 }
                 break;
                 case 2:
-                 if(index == 0)
-                {
-                    printf("No tasks have been added\n");
-                }
-                else
-                {
-                for (unsigned int i = 0; i < index; i++)
-                {
-                    for (unsigned int j = 0; j < index - i - 1; j++)
-                    {
-                        // Compare deadlines
-                        if (tasks[j].deadline[2] > tasks[j + 1].deadline[2] ||
-                            (tasks[j].deadline[2] == tasks[j + 1].deadline[2] &&
-                            tasks[j].deadline[1] > tasks[j + 1].deadline[1]) ||
-                            (tasks[j].deadline[2] == tasks[j + 1].deadline[2] &&
-                            tasks[j].deadline[1] == tasks[j + 1].deadline[1] &&
-                         tasks[j].deadline[0] > tasks[j + 1].deadline[0]))
-                    {
-                        Task temp = tasks[j];
-                        tasks[j] = tasks[j + 1];
-                        tasks[j + 1] = temp;
-                    }
-                }
-            }
-                for (unsigned int i = 0; i < index; i++)
-                {
-                    printf("\n****** Task %d ******:\n", (i + 1));
-                    printf("Title: %s\n", tasks[i].title);
-                    printf("Description: %s\n", tasks[i].description);
-                    printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
-                    switch (tasks[i].status)
-                    {
-                        case 1:
-                        printf("Status: Todo\n");
-                        break;
-                        case 2:
-                        printf("Status: Doing\n");
-                        break;
-                        case 3:
-                        printf("Status: Done\n");
-                        break;
-                        default:
-                        printf("Status: Unknown\n");
-                        break;
-                    }
-                }
-                }
+            //      if(index == 0)
+            //     {
+            //         printf("No tasks have been added\n");
+            //     }
+            //     else
+            //     {
+            //     for (unsigned int i = 0; i < index; i++)
+            //     {
+            //         for (unsigned int j = 0; j < index - i - 1; j++)
+            //         {
+            //             // Compare deadlines
+            //             if (tasks[j].deadline[2] > tasks[j + 1].deadline[2] ||
+            //                 (tasks[j].deadline[2] == tasks[j + 1].deadline[2] &&
+            //                 tasks[j].deadline[1] > tasks[j + 1].deadline[1]) ||
+            //                 (tasks[j].deadline[2] == tasks[j + 1].deadline[2] &&
+            //                 tasks[j].deadline[1] == tasks[j + 1].deadline[1] &&
+            //              tasks[j].deadline[0] > tasks[j + 1].deadline[0]))
+            //         {
+            //             Task temp = tasks[j];
+            //             tasks[j] = tasks[j + 1];
+            //             tasks[j + 1] = temp;
+            //         }
+            //     }
+            // }
+            //     for (unsigned int i = 0; i < index; i++)
+            //     {
+            //         printf("\n****** Task %d ******:\n", tasks[i].id);
+            //         printf("Title: %s\n", tasks[i].title);
+            //         printf("Description: %s\n", tasks[i].description);
+            //         printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
+            //         switch (tasks[i].status)
+            //         {
+            //             case 1:
+            //             printf("Status: Todo\n");
+            //             break;
+            //             case 2:
+            //             printf("Status: Doing\n");
+            //             break;
+            //             case 3:
+            //             printf("Status: Done\n");
+            //             break;
+            //             default:
+            //             printf("Status: Unknown\n");
+            //             break;
+            //         }
+            //     }
+            //     }
                 break;
                 case 3:
                 if(index == 0)
@@ -266,6 +281,73 @@ int main ()
                 break;
             }
             get_user_choice(&user_choice);
+            break;
+            case 3:
+                printf("Enter the task number/id:\n");
+                scanf("%d", &id);
+                for (unsigned int i = 0; i < index; i++)
+                {
+                   if (tasks[i].id == id)
+                   {
+                    printf("\n****** Task %d ******:\n", tasks[i].id);
+                    printf("Title: %s\n", tasks[i].title);
+                    printf("Description: %s\n", tasks[i].description);
+                    printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
+                    switch (tasks[i].status)
+                    {
+                        case 1:
+                        printf("Status: Todo\n");
+                        break;
+                        case 2:
+                        printf("Status: Doing\n");
+                        break;
+                        case 3:
+                        printf("Status: Done\n");
+                        break;
+                        default:
+                        printf("Status: Unknown\n");
+                        break;
+                    }
+                    get_modify_menu(&modify_choice);
+                    switch (modify_choice)
+                    {
+                        case 1:
+                        printf("Enter a Description\n");
+                        fgets(description, sizeof(description), stdin);
+                        description[ft_strlen(description) - 1] = '\0';
+                        tasks[i].description = strdup(description);
+                        break;
+                        case 2:
+                        printf("Day:\n");
+                        scanf("%d", &day);
+                        printf("Month:\n");
+                        scanf("%d", &month);
+                        printf("Year:\n");
+                        scanf("%d", &year);
+                        tasks[i].deadline[0] = day;
+                        tasks[i].deadline[1] = month;
+                        tasks[i].deadline[2] = year;
+                        break;
+                        case 3:
+                        printf("Enter a Status:\n");
+                        printf("Enter 1 for Todo, 2 for Doing and 3 for Done\n");
+                        fgets(description, sizeof(description), stdin);
+                        description[ft_strlen(description) - 1] = '\0';
+                        tasks[i].description = strdup(description);  
+                        break;
+                        default:
+                        printf("Invalid choice\n");
+                        break;
+                    }
+                   }
+                   else 
+                   {
+                        printf("Task doesnt exist\n");
+                        break;
+                   }
+                }
+            break;
+            case 7:
             break;
             default:
             printf("Invalid choice\n");
