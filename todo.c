@@ -122,7 +122,7 @@ int main ()
     int statistics_choice;
     int num_times = 0;
     int index = 0;
-    Task tasks[100];
+    Task tasks[100]; //static size
     // printf("\033[0;34m"); sets text color to blue (optional)
     get_user_choice(&user_choice);
     do {
