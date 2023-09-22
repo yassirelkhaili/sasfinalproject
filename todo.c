@@ -56,7 +56,8 @@ void get_user_choice(int *user_choice)
     printf("[4] Delete task\n");
     printf("[5] Search task\n");
     printf("[6] Display statistics\n");
-    printf("[7] Quit\n");
+    printf("[7] Add multiple tasks\n");
+    printf("[8] Quit\n");
     printf("\nEnter your choice [1-7]:\n");
     scanf("%d", &choice);
     *user_choice = choice;
@@ -120,6 +121,7 @@ int main ()
     int modify_choice;
     int search_choice;
     int statistics_choice;
+    int num_times = 0;
     int index = 0;
     Task tasks[100];
     // printf("\033[0;34m"); sets text color to blue (optional)
@@ -585,13 +587,51 @@ case 3:
     }
     get_user_choice(&user_choice);
     break;
-            case 7:
+    case 7:
+        printf("Number of tasks:\n");
+        scanf("%d", &num_times);
+        if (num_times <= 0)
+        {
+            printf("Invalid input\n");
+        }
+        else
+        {
+            for (size_t i = 0; i < num_times; i++)
+        {
+            printf("\nEnter the title:\n");
+            getchar();
+            fgets(title, sizeof(title), stdin);
+            title[ft_strlen(title) - 1] = '\0';
+            printf("Enter the description:\n");
+            fgets(description, sizeof(description), stdin);
+            description[ft_strlen(description) - 1] = '\0';
+            printf("Enter the deadline:\n");
+            printf("Day:\n");
+            scanf("%d", &day);
+            printf("Month:\n");
+            scanf("%d", &month);
+            printf("Year:\n");
+            scanf("%d", &year);
+            tasks[index].id = index + 1;
+            tasks[index].title = strdup(title);
+            tasks[index].description = strdup(description);
+            tasks[index].status = status;
+            tasks[index].deadline[0] = day;
+            tasks[index].deadline[1] = month;
+            tasks[index].deadline[2] = year;
+            index++;
+            printf("Task has been added successfully.");
+        }
+        }
+        get_user_choice(&user_choice);
+    break;
+            case 8:
             break;
             default:
             printf("Invalid choice\n");
             break;
         }
-    } while(user_choice != 7);
+    } while(user_choice != 8);
     printf("----End of Program----");
     return 0;
 }
