@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-typedef struct {
+typedef struct { //task struct
     int id;
     char *title;
     char *description;
@@ -11,28 +11,34 @@ typedef struct {
     int status;
 } Task;
 
-int ft_strcmp(char *s1, char *s2)
+int ft_strcmp(char *s1, char *s2) // Custom strcmp
 {
-    char ch1 = 0; 
-    char ch2 = 0;
-    
-    while (*s1 && *s2 && *s1 == *s2)
+    while (*s1 && *s2)
     {
+        char ch1 = *s1;
+        char ch2 = *s2;
+
+        if (*s1 >= 97 && *s1 <= 122)
+        {
+            ch1 -= 32; 
+        }
+
+        if (*s2 >= 97 && *s2 <= 122)
+        {
+            ch2 -= 32; 
+        }
+
+        if (ch1 != ch2)
+        {
+            return ch1 - ch2; 
+        }
         s1++;
         s2++;
-    }  
-    if ((*s1 >= 97 && *s1 <= 122) || (*s2 >= 97 && *s2 <= 122))
-    {
-        if (*s1 >= 97 && *s1 <= 122)
-            ch1 = *s1 - 32; 
-        if (*s2 >= 97 && *s2 <= 122)
-            ch2 = *s2 - 32;  
     }
-    return (ch1 - ch2);
+    return 0; 
 }
 
-
-int ft_strlen(char *str)
+int ft_strlen(char *str) //my custom strlen
 {
     int strlen = 0;
     while (*str)
@@ -57,7 +63,7 @@ void get_user_choice(int *user_choice)
     printf("[6] Display statistics\n");
     printf("[7] Add multiple tasks\n");
     printf("[8] Quit\n");
-    printf("\nEnter your choice [1-7]:\n");
+    printf("\nEnter your choice [1-8]:\n");
     scanf("%d", &choice);
     *user_choice = choice;
 }
@@ -144,7 +150,7 @@ int main ()
             title[ft_strlen(title) - 1] = '\0';
             printf("Enter the description:\n");
             fgets(description, sizeof(description), stdin);
-            description[ft_strlen(description) - 1] = '\0';
+            description[ft_strlen(description) - 1] = '\0'; //deletes newline char
             printf("Enter the deadline:\n");
             printf("Day:\n");
             scanf("%d", &day);
@@ -178,7 +184,7 @@ int main ()
                 //sort tasks alphabetically using bubblesort
                 for (unsigned int i = 0; i < index; i++)
                 {
-                    for (unsigned int j = 0; j < index - i - 1; j++)
+                    for (unsigned int j = 0; j < index - 1; j++)
                     {
                         if (ft_strcmp(tasks[j].title, tasks[j + 1].title) > 0)
                         {
@@ -220,24 +226,23 @@ int main ()
                 }
                 else
                 {
-                for (unsigned int i = 0; i < index; i++)
-                {
-                    for (unsigned int j = 0; j < index - i - 1; j++)
-                    {
-                        // Compare deadlines
-                        if (tasks[j].deadline[2] < tasks[j + 1].deadline[2] ||
-                            (tasks[j].deadline[2] == tasks[j + 1].deadline[2] &&
-                            tasks[j].deadline[1] < tasks[j + 1].deadline[1]) ||
-                            (tasks[j].deadline[2] == tasks[j + 1].deadline[2] &&
-                            tasks[j].deadline[1] == tasks[j + 1].deadline[1] &&
-                         tasks[j].deadline[0] < tasks[j + 1].deadline[0]))
-                    {
-                        Task temp = tasks[j + 1];
-                        tasks[j + 1] = tasks[j];
-                        tasks[j] = temp;
-                    }
-                }
-            }
+    for (unsigned int i = 0; i < index; i++) {
+    for (unsigned int j = 0; j < index - 1; j++) {
+        // Compare the two deadlines
+        if (tasks[j].deadline[2] > tasks[j + 1].deadline[2] ||
+            (tasks[j].deadline[2] == tasks[j + 1].deadline[2] &&
+             tasks[j].deadline[1] > tasks[j + 1].deadline[1]) ||
+            (tasks[j].deadline[2] == tasks[j + 1].deadline[2] &&
+             tasks[j].deadline[1] == tasks[j + 1].deadline[1] &&
+             tasks[j].deadline[0] > tasks[j + 1].deadline[0]))
+        {
+            Task temp = tasks[j + 1]; // Sort if the first deadline is less than the second
+            tasks[j + 1] = tasks[j];
+            tasks[j] = temp;
+        }
+    }
+}
+
                 for (unsigned int i = 0; i < index; i++)
                 {
                     printf("\n****** Task %d ******:\n", tasks[i].id);
@@ -276,7 +281,7 @@ int main ()
                 {
                     if (tasks[i].deadline[2] >= currentyear)
                     {
-                        daysleft = (tasks[i].deadline[2] - currentyear) * 365;
+                        daysleft = (tasks[i].deadline[2] - currentyear) * 365; //calculate total days left
                         daysleft += (tasks[i].deadline[1] - timestruct->tm_mon - 1) * 30;
                         daysleft += (tasks[i].deadline[0] - timestruct->tm_mday);
                         if (daysleft >= 0 && daysleft <= 3)
@@ -355,7 +360,7 @@ case 3:
                     getchar();
                     fgets(description, sizeof(description), stdin);
                     description[ft_strlen(description) - 1] = '\0';
-                    free(tasks[i].description); 
+                    free(tasks[i].description); //free already allocated memory so we can add a new description instead 
                     tasks[i].description = strdup(description);
                     break;
                 case 2:
@@ -417,7 +422,9 @@ case 3:
                 break;
             }
             f = 1;
+            Task temp = tasks[u];
             tasks[u] = tasks[index - 1];
+            tasks[index - 1] = temp;
             index--;
             break; 
         }
@@ -628,6 +635,7 @@ case 3:
             break;
             default:
             printf("Invalid choice\n");
+            return 0;
             break;
         }
     } while(user_choice != 8);
