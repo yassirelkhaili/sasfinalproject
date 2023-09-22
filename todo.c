@@ -537,22 +537,24 @@ case 3:
     break;
     case 6:
     get_statistics_menu(&statistics_choice);
+    int n = 0;
+    int completed = 0;
+    int incomplete = 0;
     switch (statistics_choice)
     {
         case 1:
         printf("Total number of tasks: %d\n", index);
         break;
         case 2:
-        int n = 0;
-        int completed = 0;
         while (n < index)
         {
             if (tasks[n].status == 3)
                 completed++;
             n++;
         }
-        int incomplete = index - completed;
+        incomplete = index - completed;
         printf("Completed tasks: %d\nIncomplete tasks: %d\n", completed, incomplete);
+        break;
         case 3:
         break;
         case 4:
