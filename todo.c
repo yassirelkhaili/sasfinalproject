@@ -88,11 +88,24 @@ void get_modify_menu(int *modify_choice)
     *modify_choice = choice;
 }
 
+void get_search_menu(int *search_choice)
+{
+    int choice;
+    printf("\nChoose an search method:\n");
+    printf("[1] By id\n");
+    printf("[2] By title\n");
+    printf("[3] Back\n");
+    printf("\nEnter your choice [1-3]:\n");
+    scanf("%d", &choice);
+    *search_choice = choice;
+}
+
 int main ()
 {
     int user_choice;
     int display_choice;
     int modify_choice;
+    int search_choice;
     int index = 0;
     Task tasks[100];
     // printf("\033[0;34m"); sets text color to blue (optional)
@@ -284,7 +297,13 @@ int main ()
             get_user_choice(&user_choice);
             break;
 case 3:
+ if (index == 0)
+ {
     printf("Enter the task number:\n");
+ }
+ else
+ {
+     printf("Enter the task number:\n");
     scanf("%d", &id);
     int i = 0;
     int found = 0;
@@ -353,6 +372,7 @@ case 3:
     {
         printf("Task not found\n");
     }
+ }
     get_user_choice(&user_choice);
     break;
     case 4:
@@ -366,13 +386,18 @@ case 3:
     scanf("%d", &id);
     int u = 0;
     int f = 0;
-
     while (u < index)
     {
         if (tasks[u].id == id)
         {
+            if (index == 1)
+            {
+                index--;
+                break;
+            }
             f = 1;
-            
+            tasks[u] = tasks[index - 1];
+            index--;
             break; 
         }
         u++;
@@ -383,6 +408,115 @@ case 3:
     }
     }
     get_user_choice(&user_choice);
+    break;
+    case 5:
+    get_search_menu(&search_choice);
+    switch (search_choice)
+    {
+    case 1:
+         if (index == 0)
+    {
+        printf("No tasks have been added\n");
+    }
+    else 
+    {
+    printf("Enter the task number:\n");
+    scanf("%d", &id);
+    int u = 0;
+    int f = 0;
+    while (u < index)
+    {
+        if (tasks[u].id == id)
+        {
+            f = 1;
+            printf("\n****** Task %d ******\n", tasks[u].id);
+            printf("Title: %s\n", tasks[u].title);
+            printf("Description: %s\n", tasks[u].description);
+            printf("Deadline: %02d-%02d-%04d\n", tasks[u].deadline[0], tasks[u].deadline[1], tasks[u].deadline[2]);
+            switch (tasks[u].status)
+            {
+                case 1:
+                    printf("Status: Todo\n");
+                    break;
+                case 2:
+                    printf("Status: Doing\n");
+                    break;
+                case 3:
+                    printf("Status: Done\n");
+                    break;
+                default:
+                    printf("Status: Unknown\n");
+                    break;
+            }
+            break; 
+        }
+        u++;
+    }
+    if (!f)
+    {
+        printf("Task not found\n");
+    }
+    }
+    break;
+    case 2:
+      if (index == 0)
+    {
+        printf("No tasks have been added\n");
+    }
+    else 
+    {
+    char search_title[100];
+    printf("Enter the task title:\n");
+    getchar();
+    fgets(search_title, sizeof(search_title), stdin);
+    search_title[ft_strlen(search_title) - 1] = '\0';
+    int u = 0;
+    int f = 0;
+    while (u < index)
+    {
+        if (strcmp(tasks[u].title, search_title) == 0)
+        {
+            f = 1;
+            printf("\n****** Task %d ******\n", tasks[u].id);
+            printf("Title: %s\n", tasks[u].title);
+            printf("Description: %s\n", tasks[u].description);
+            printf("Deadline: %02d-%02d-%04d\n", tasks[u].deadline[0], tasks[u].deadline[1], tasks[u].deadline[2]);
+            switch (tasks[u].status)
+            {
+                case 1:
+                    printf("Status: Todo\n");
+                    break;
+                case 2:
+                    printf("Status: Doing\n");
+                    break;
+                case 3:
+                    printf("Status: Done\n");
+                    break;
+                default:
+                    printf("Status: Unknown\n");
+                    break;
+            }
+            break; 
+        }
+        u++;
+    }
+    if (!f)
+    {
+        printf("Task not found\n");
+    }
+    }
+    break;
+    case 3:
+    break;
+        break;
+        default:
+        printf("Invalid choice\n");
+        break;
+    }
+    get_user_choice(&user_choice);
+    break;
+    case 6:
+    
     break;
             case 7:
             break;
