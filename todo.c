@@ -185,55 +185,55 @@ int main ()
                 }
                 }
                 break;
-                //case 2:
-            //      if(index == 0)
-            //     {
-            //         printf("No tasks have been added\n");
-            //     }
-            //     else
-            //     {
-            //     for (unsigned int i = 0; i < index; i++)
-            //     {
-            //         for (unsigned int j = 0; j < index - i - 1; j++)
-            //         {
-            //             // Compare deadlines
-            //             if (tasks[j].deadline[2] > tasks[j + 1].deadline[2] ||
-            //                 (tasks[j].deadline[2] == tasks[j + 1].deadline[2] &&
-            //                 tasks[j].deadline[1] > tasks[j + 1].deadline[1]) ||
-            //                 (tasks[j].deadline[2] == tasks[j + 1].deadline[2] &&
-            //                 tasks[j].deadline[1] == tasks[j + 1].deadline[1] &&
-            //              tasks[j].deadline[0] > tasks[j + 1].deadline[0]))
-            //         {
-            //             Task temp = tasks[j];
-            //             tasks[j] = tasks[j + 1];
-            //             tasks[j + 1] = temp;
-            //         }
-            //     }
-            // }
-            //     for (unsigned int i = 0; i < index; i++)
-            //     {
-            //         printf("\n****** Task %d ******:\n", tasks[i].id);
-            //         printf("Title: %s\n", tasks[i].title);
-            //         printf("Description: %s\n", tasks[i].description);
-            //         printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
-            //         switch (tasks[i].status)
-            //         {
-            //             case 1:
-            //             printf("Status: Todo\n");
-            //             break;
-            //             case 2:
-            //             printf("Status: Doing\n");
-            //             break;
-            //             case 3:
-            //             printf("Status: Done\n");
-            //             break;
-            //             default:
-            //             printf("Status: Unknown\n");
-            //             break;
-            //         }
-            //     }
-            //     }
-                //break;
+                case 2:
+                 if(index == 0)
+                {
+                    printf("No tasks have been added\n");
+                }
+                else
+                {
+                for (unsigned int i = 0; i < index; i++)
+                {
+                    for (unsigned int j = 0; j < index - i - 1; j++)
+                    {
+                        // Compare deadlines
+                        if (tasks[j].deadline[2] < tasks[j + 1].deadline[2] ||
+                            (tasks[j].deadline[2] == tasks[j + 1].deadline[2] &&
+                            tasks[j].deadline[1] < tasks[j + 1].deadline[1]) ||
+                            (tasks[j].deadline[2] == tasks[j + 1].deadline[2] &&
+                            tasks[j].deadline[1] == tasks[j + 1].deadline[1] &&
+                         tasks[j].deadline[0] < tasks[j + 1].deadline[0]))
+                    {
+                        Task temp = tasks[j + 1];
+                        tasks[j + 1] = tasks[j];
+                        tasks[j] = temp;
+                    }
+                }
+            }
+                for (unsigned int i = 0; i < index; i++)
+                {
+                    printf("\n****** Task %d ******:\n", tasks[i].id);
+                    printf("Title: %s\n", tasks[i].title);
+                    printf("Description: %s\n", tasks[i].description);
+                    printf("Deadline: %02d-%02d-%04d\n", tasks[i].deadline[0], tasks[i].deadline[1], tasks[i].deadline[2]);
+                    switch (tasks[i].status)
+                    {
+                        case 1:
+                        printf("Status: Todo\n");
+                        break;
+                        case 2:
+                        printf("Status: Doing\n");
+                        break;
+                        case 3:
+                        printf("Status: Done\n");
+                        break;
+                        default:
+                        printf("Status: Unknown\n");
+                        break;
+                    }
+                }
+                }
+                break;
                 case 3:
                 if(index == 0)
                 {
@@ -249,7 +249,7 @@ int main ()
                     if (tasks[i].deadline[2] >= currentyear)
                     {
                         daysleft = (tasks[i].deadline[2] - currentyear) * 365;
-                        daysleft += (tasks[i].deadline[1] - timestruct->tm_mon - 1) * 30;
+                        daysleft += (tasks[i].deadline[1] - timestruct->tm_mon + 1) * 30;
                         daysleft += (tasks[i].deadline[0] - timestruct->tm_mday);
                         if (daysleft >= 0 && daysleft <= 3)
                         {
@@ -356,24 +356,31 @@ case 3:
     get_user_choice(&user_choice);
     break;
     case 4:
+    if (index == 0)
+    {
+        printf("No tasks have been added\n");
+    }
+    else 
+    {
     printf("Enter the task number:\n");
     scanf("%d", &id);
-    int i = 0;
-    int found = 0;
+    int u = 0;
+    int f = 0;
 
-    while (i < index)
+    while (u < index)
     {
-        if (tasks[i].id == id)
+        if (tasks[u].id == id)
         {
-            found = 1;
+            f = 1;
             
             break; 
         }
-        i++;
+        u++;
     }
-    if (!found)
+    if (!f)
     {
         printf("Task not found\n");
+    }
     }
     get_user_choice(&user_choice);
     break;
