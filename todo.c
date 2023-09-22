@@ -100,12 +100,26 @@ void get_search_menu(int *search_choice)
     *search_choice = choice;
 }
 
+void get_statistics_menu(int *statistics_choice)
+{
+    int choice;
+    printf("\nChoose a statistic to display:\n");
+    printf("[1] Total number of tasks\n");
+    printf("[2] Number of complete and incomplete tasks\n");
+    printf("[3] Days left until Deadline\n");
+    printf("[4] Back\n");
+    printf("\nEnter your choice [1-4]:\n");
+    scanf("%d", &choice);
+    *statistics_choice = choice;
+}
+
 int main ()
 {
     int user_choice;
     int display_choice;
     int modify_choice;
     int search_choice;
+    int statistics_choice;
     int index = 0;
     Task tasks[100];
     // printf("\033[0;34m"); sets text color to blue (optional)
@@ -358,6 +372,12 @@ case 3:
                 case 3:
                     printf("Enter the status (1 for Todo, 2 for Doing, 3 for Done):\n");
                     scanf("%d", &status);
+                    while (!(status >= 1 && status <= 3))
+                    {
+                    printf("Invalid status\n");
+                    printf("Enter the status (1 for Todo, 2 for Doing, 3 for Done):\n");
+                    scanf("%d", &status);
+                    }
                     tasks[i].status = status;
                     break;
                 default:
@@ -516,7 +536,32 @@ case 3:
     get_user_choice(&user_choice);
     break;
     case 6:
-    
+    get_statistics_menu(&statistics_choice);
+    switch (statistics_choice)
+    {
+        case 1:
+        printf("Total number of tasks: %d\n", index);
+        break;
+        case 2:
+        int n = 0;
+        int completed = 0;
+        while (n < index)
+        {
+            if (tasks[n].status == 3)
+                completed++;
+            n++;
+        }
+        int incomplete = index - completed;
+        printf("Completed tasks: %d\nIncomplete tasks: %d\n", completed, incomplete);
+        case 3:
+        break;
+        case 4:
+        break;
+        default:
+        printf("Invalid choice\n");
+        break;
+    }
+    get_user_choice(&user_choice);
     break;
             case 7:
             break;
