@@ -556,6 +556,26 @@ case 3:
         printf("Completed tasks: %d\nIncomplete tasks: %d\n", completed, incomplete);
         break;
         case 3:
+        if(index == 0)
+                {
+                    printf("No tasks have been added\n");
+                }
+                else
+                {
+                //display tasks with deadline less than or equal to 3 days (urgent)
+                int daysleft = 0;
+                int currentyear = timestruct->tm_year + 1900; //add epoch time to get currentyear
+                for (unsigned int i = 0; i < index; i++)
+                {
+                    if (tasks[i].deadline[2] >= currentyear)
+                    {
+                        daysleft = (tasks[i].deadline[2] - currentyear) * 365;
+                        daysleft += (tasks[i].deadline[1] - timestruct->tm_mon - 1) * 30;
+                        daysleft += (tasks[i].deadline[0] - timestruct->tm_mday);
+                    printf("\nTask %d: %d days \n", tasks[i].id, daysleft);
+                    }
+                }
+                }
         break;
         case 4:
         break;
