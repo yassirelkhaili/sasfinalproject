@@ -276,7 +276,7 @@ int main ()
                     if (tasks[i].deadline[2] >= currentyear)
                     {
                         daysleft = (tasks[i].deadline[2] - currentyear) * 365;
-                        daysleft += (tasks[i].deadline[1] - timestruct->tm_mon + 1) * 30;
+                        daysleft += (tasks[i].deadline[1] - timestruct->tm_mon - 1) * 30;
                         daysleft += (tasks[i].deadline[0] - timestruct->tm_mday);
                         if (daysleft >= 0 && daysleft <= 3)
                         {
